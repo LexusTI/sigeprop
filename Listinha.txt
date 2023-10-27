@@ -1,0 +1,9 @@
+Cadastros
+
+  -> Audiência (Listar, Cadastrar, deletar e alterar)
+
+  -> Usuário (Listar, Cadastrar, deletar e alterar)
+
+  -> Eventos (Listar, Cadastrar, deletar e alterar)
+
+  -> Pagamento de Armas (Listar, Cadastrar, deletar e alterar)

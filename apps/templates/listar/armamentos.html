@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Armamento{% endblock %}
+{% block head %}{% endblock %}
+{% block section %}
+<div class="row">
+    <div class="col-lg-12">
+        <!-- Approach -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Armamento</h6>
+            </div>
+            <div class="card-body">
+                <h6>Todos armamentos</h6>
+                <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="dataTable_length"><form id="mostrar">
+                                    <label>Mostrar <select
+                                                id="mostrar_select" name="mostrar" aria-controls="dataTable"
+                                                class="custom-select custom-select-sm form-control form-control-sm">
+                                                {% if request.GET.mostrar %}
+                                                <option value="{{request.GET.mostrar}}">{{request.GET.mostrar}}</option>
+                                                {% endif %}
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entradas</label>
+                                </form></div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <form action="{% url 'listar_armamento' %}" class="form-inline">
+                                    <input class="form-control mr-sm-2" autocomplete="off" type="search"
+                                        name="pesquisa_armamento" placeholder="Pesquisas"
+                                        value="{{request.GET.pesquisa_armamento}}" aria-label="Pesquisas">
+                                    <button class="btn btn-outline-primary my-2 my-sm-0 mr-sm-2" type="submit"><i
+                                            class="fas fa-fw fa-search"></i></button>
+                                    {% if perms.auth.cadastrar_armamento %}
+                                    <a class="btn btn-outline-primary my-2 my-sm-0 mr-sm-2"
+                                        href="{% url 'cdt_armamento'%}"><i class="fas fa-fw fa-plus"></i></a>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered dataTable" id="dataTable" width="100%"
+                                    cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                                                rowspan="1" colspan="1" aria-sort="ascending"
+                                                aria-label="Name: activate to sort column descending"
+                                                style="width: 113.45px;">
+                                                N° de registro
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 190.45px;">
+                                                Tipo da arma
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 190.45px;">
+                                                Usuário atual
+                                            </th>
+                                            {% if perms.auth.cadastrar_armamento %}
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Start date: activate to sort column ascending"
+                                                style="width: 74.7125px;">Operações
+                                            </th>
+                                            {% endif %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if armamentos %}
+                                        {% for armamento in armamentos %}
+                                        <tr class="odd">
+                                            <td class="sorting_1">{{armamento.numero_de_registro}}</td>
+                                            <td>{{armamento.tipo_de_arma}}</td>
+                                            {% if armamento.usuario_atual %}
+                                                <td>{{armamento.usuario_atual}}</td>
+                                                {% else %}
+                                                <td></td>
+                                            {% endif %}
+                                            {% if perms.auth.cadastrar_armamento%}
+                                            <td style="display: flex; justify-content: space-around;">
+                                                <a title='ver' href="{% url 'ver_armamento' armamento.id %}"><i
+                                                        class="fas fa-fw fa-eye"></i></a>
+                                                <a title='editar' href="{% url 'edt_armamento' armamento.id %}"><i
+                                                        class="fas fa-fw fa-edit"></i></a>
+                                                <a title='excluir' href="{% url 'del_armamento' armamento.id %}"><i
+                                                        class="fas fa-fw fa-trash"></i></a>
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                        {% else %}
+                                        Sem resultados
+                                        {% endif %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 display-5">
+                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                    <ul class="pagination">
+                                        {% if armamentos.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                                href="{% url 'listar_armamento' %}?page={{armamentos.previous_page_number}}"
+                                                tabindex="-1">Anterior</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                                        </li>
+                                        {% endif %}
+                                        {% for num in armamentos.paginator.page_range %}
+                                        {% if num == armamentos.number %}
+                                        <li class="page-item active"><a class="page-link" href="#">{{num}}</a></li>
+                                        {% else %}
+                                        <li class="page-item"><a class="page-link"
+                                                href="{% url 'listar_armamento' %}?page={{num}}">{{num}}</a>
+                                        </li>
+                                        {% endif %}
+
+                                        {% endfor %}
+
+                                        {% if armamentos.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                                href="{% url 'listar_armamento' %}?page={{armamentos.next_page_number}}"
+                                                tabindex="-1">Próximo</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">Próximo</a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}{% endblock %}

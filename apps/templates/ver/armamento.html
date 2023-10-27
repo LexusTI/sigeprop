@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Armamento{% endblock %}
+{% block head %}{% endblock %}
+{% block section %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sobre a Arma:{{armamento.numero_de_registro}}</h6>
+            </div>
+            <div class="modal-body">
+                <p style="vertical-align: inherit;"><strong>Número de registro da
+                        arma:</strong>{{armamento.numero_de_registro}}.</p>
+                <p style="vertical-align: inherit;"><strong>Tipo da arma:</strong> {{armamento.tipo_de_arma}}.</p>
+                <p style="vertical-align: inherit;"><strong>Status da Arma:</strong> {{armamento.status_da_arma}}.
+                </p>
+                <p style="vertical-align: inherit;"><strong>usuario Atual:</strong> {{armamento.usuario_atual}}</p>
+            </div>
+            {% if perms.auth.cadastrar_usuario%}
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary" data-bs-dismiss="modal" title='editar'
+                    href="{% url 'edt_armamento' armamento.id %}"><i class="fas fa-fw fa-edit"></i>Editar</a>
+                </a>
+                <a type="button" class="btn btn-secondary" style="vertical-align: inherit;" title='Voltar'
+                    href="{% url 'listar_armamento'%}">
+                    </i>Voltar
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block js %}{% endblock %}

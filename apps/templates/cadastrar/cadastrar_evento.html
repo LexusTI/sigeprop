@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Cadastrar Evento{% endblock %}
+{% block head %}{% endblock %}
+{% block titulo_cabecalho %}Cadastrar Evento{% endblock %}
+{% block section %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <!-- Approach -->
+        <div class="card shadow mb-4 card-body">
+            <form action="{% url 'cdt_evento' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group"><label for="id_numero_do_processo">Número de processo do evento</label><input type="text" name="numero_do_processo" maxlength="100" class="form-control" placeholder="Número de processo do evento" title="" required="" id="id_numero_do_processo"></div>
+                <div class="form-group"><label for="id_nome">Nome do evento</label><input type="text" name="nome" maxlength="100" class="form-control" placeholder="Nome do evento" title="" required="" id="id_nome"></div>
+                <div class="form-group"><label for="id_data_do_evento">Data e horário do evento</label><input type="datetime-local" name="data_do_evento" class="form-control" placeholder="Data e horário do evento" title="" required="" id="id_data_do_evento"></div>
+                <div class="form-group"><label for="id_local">Local do evento</label><input type="text" name="local" maxlength="250" class="form-control" placeholder="Local do evento" title="" required="" id="id_local"></div>
+
+                <div class="form-group">
+                    <label for="id_documento">Documento do evento</label><br><input type="file"
+                        name="documento" class="form-control-file" style="display: block;" id="id_documento"
+                        multiple>
+                </div>
+
+                <div class="form-group"><label for="id_interessados">Interessados do evento</label><select name="interessados" class="form-control" title="" id="id_interessados" multiple="">
+                    {% for usuario in usuarios %}
+                        <option value="{{usuario.id}}">{{usuario.perfil.user.first_name}}-{{usuario.matricula}}</option>
+                        {% endfor %}
+                  
+                  </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-check"><input type="checkbox" name="notificar_email" class="form-check-input"
+                            id="id_notificar_email" checked=""><label class="form-check-label"
+                            for="id_notificar_email">Notificar interessados por e-mail</label></div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check"><input type="checkbox" name="notificar_whatsapp" class="form-check-input"
+                            id="id_notificar_whatsapp" checked=""><label class="form-check-label"
+                            for="id_notificar_whatsapp">Notificar interessados por WhatsApp</label></div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Cadastrar</button>
+                <a class="btn btn-secondary" href="{% url 'listar_evento'%}">Cancelar</a>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+{% endblock %}

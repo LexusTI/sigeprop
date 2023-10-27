@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Cadastrar Armamento{% endblock %}
+{% block head %}{% endblock %}
+{% block titulo_cabecalho %}Cadastrar Armamento{% endblock %}
+{% block section %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <!-- Approach -->
+        <div class="card shadow mb-4 card-body">
+            <form action="{% url 'cdt_armamento' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form arma_form %}
+                <button class="btn btn-primary" type="submit">Cadastrar</button>
+                <a class="btn btn-secondary" href="{% url 'listar_armamento'%}">Cancelar</a>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+{% endblock %}

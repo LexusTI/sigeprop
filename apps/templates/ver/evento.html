@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Evento{% endblock %}
+{% block head %}{% endblock %}
+{% block section %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Evento:{{evento.numero_do_processo}}</h6>
+            </div>
+            <div class="modal-body">
+                <p style="vertical-align: inherit;"><strong>Número do
+                        processo:</strong>{{evento.numero_do_processo}}.</p>
+                <p style="vertical-align: inherit;"><strong>Dia e horário da Evento:</strong>
+                    {{evento.data_do_evento}}.</p>
+                <p style="vertical-align: inherit;"><strong>Local da Evento:</strong> {{evento.local}}.</p>
+            </div>
+            {% if perms.auth.cadastrar_usuario%}
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary" data-bs-dismiss="modal" title='editar'
+                    href="{% url 'edt_evento' evento.id %}"><i class="fas fa-fw fa-edit"></i>Editar</a>
+                </a>
+                <a type="button" class="btn btn-secondary" style="vertical-align: inherit;" title='Voltar'
+                    href="{% url 'listar_evento'%}">
+                    </i>Voltar
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h5>Convocados para o Evento</h5>
+        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
+            aria-describedby="dataTable_info" style="width: 100%;">
+            <thead>
+                <tr role="row">
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                        style="width: 113.45px;">
+                        Nome
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Position: activate to sort column ascending" style="width: 190.45px;">
+                        Matrícula</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Office: activate to sort column ascending" style="width: 78.7px;">
+                        Pelotão
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Age: activate to sort column ascending" style="width: 30.1625px;">
+                        E-mail
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Start date: activate to sort column ascending" style="width: 74.7125px;">Telefone
+                    </th>
+                    {% if perms.auth.cadastrar_usuario%}
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Start date: activate to sort column ascending" style="width: 74.7125px;">Operações
+                    </th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% if evento %}
+                {% for usuario in evento.interessados.all %}
+                <tr class="odd">
+                    <td class="sorting_1">{{usuario.perfil.user.first_name}}</td>
+                    <td>{{usuario.matricula}}</td>
+                    <td>{{usuario.pelotao}}</td>
+                    <td>{{usuario.perfil.user.email}}</td>
+                    <td>{{usuario.telefone}}</td>
+                    {% if perms.auth.cadastrar_usuario%}
+                    <td style="display: flex; justify-content: space-around;">
+                        <button title='notificar' class="btn btn-primary dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item"
+                                href="{% url 'ntf_evento_email_individual' evento.id usuario.id %}">E-mail</a>
+                            <a target="_blank" class="dropdown-item"
+                                href="{% url 'ntf_evento_whatsapp_individual' evento.id usuario.id %}">WhatsApp</a>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% else %}
+                Nada cadastrado
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}{% endblock %}

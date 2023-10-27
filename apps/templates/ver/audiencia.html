@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Audiência{% endblock %}
+{% block head %}{% endblock %}
+{% block section %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Audiência:{{audiencia.numero_do_processo}}</h6>
+            </div>
+            <div class="modal-body">
+                <p style="vertical-align: inherit;"><strong>Número do
+                        processo:</strong>{{audiencia.numero_do_processo}}.</p>
+                <p style="vertical-align: inherit;"><strong>Dia e horário da audiência:</strong>
+                    {{audiencia.data_do_processo}}.</p>
+                <p style="vertical-align: inherit;"><strong>Local da audiência:</strong> {{audiencia.local}}.</p>
+                <p><strong>Situação da audiência:</strong> {{audiencia.situacao}}.</p>
+
+            </div>
+            {% if perms.auth.cadastrar_usuario%}
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary" data-bs-dismiss="modal" title='editar'
+                    href="{% url 'edt_audiencia' audiencia.id %}"><i class="fas fa-fw fa-edit"></i>Editar</a>
+                </a>
+                <a href="{% url 'cancelar_audiencia' audiencia.id%}">
+                    </i>Cancelar audiência
+                </a>
+                <a href="{% url 'remarcar_audiencia' audiencia.id%}">
+                </i>Remarcar audiência
+            </a>
+                <a type="button" class="btn btn-secondary" style="vertical-align: inherit;" title='Voltar'
+                    href="{% url 'listar_audiencia'%}">
+                    </i>Voltar
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h5>Interessados na audiência</h5>
+        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
+            aria-describedby="dataTable_info" style="width: 100%;">
+            <thead>
+                <tr role="row">
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                        style="width: 113.45px;">
+                        Nome
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Position: activate to sort column ascending" style="width: 190.45px;">
+                        Matrícula</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Office: activate to sort column ascending" style="width: 78.7px;">
+                        Pelotão
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Age: activate to sort column ascending" style="width: 30.1625px;">
+                        E-mail
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Start date: activate to sort column ascending" style="width: 74.7125px;">Telefone
+                    </th>
+                    <th>Confirmação de recebimento</th>
+                    {% if perms.auth.cadastrar_usuario%}
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Start date: activate to sort column ascending" style="width: 74.7125px;">Operações
+                    </th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% if audiencia %}
+                {% for usuario in audiencia.interessados.all %}
+                <tr class="odd">
+                    <td class="sorting_1">{{usuario.perfil.user.first_name}}</td>
+                    <td>{{usuario.matricula}}</td>
+                    <td>{{usuario.pelotao}}</td>
+                    <td>{{usuario.perfil.user.email}}</td>
+                    <td class="mask-telefone">{{usuario.telefone}}</td>
+                    <td>
+                        {% if audiencia_usuarios %}
+                            {% for audiencia_usuario in audiencia_usuarios %}
+                                    {% if usuario == audiencia_usuario.usuario %}
+                                        {% if  audiencia_usuario.confirmar_recebimento %}
+                                        Confirmado
+                                        {% else %}
+                                        Não confirmado
+                                        {% endif %}
+                                    {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% if perms.auth.cadastrar_usuario%}
+                    <td style="display: flex; justify-content: space-around;">
+                        <button title='notificar' class="btn btn-primary dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item"
+                                href="{% url 'ntf_audiencia_email_individual' audiencia.id usuario.id %}">E-mail</a>
+                            <a target="_blank" class="dropdown-item"
+                                href="{% url 'ntf_audiencia_whatsapp_individual' audiencia.id usuario.id %}">WhatsApp</a>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% else %}
+                Nada cadastrado
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block titulo %}Editar Audiência{% endblock %}
+{% block head %}{% endblock %}
+{% block titulo_cabecalho %}Editar Audiência{% endblock %}
+{% block section %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <!-- Approach -->
+        <div class="card shadow mb-4 card-body">
+            <form action="{% url 'edt_audiencia' audiencia.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- <div class="form-group">
+                    <label for="id_numero_do_processo">Número do processo da audiência</label>
+                    <input type="text" name="numero_do_processo" maxlength="100" class="form-control"
+                        placeholder="Número de processo da audiência" title="" required id="id_numero_do_processo" value="{{audiencia.numero_do_processo}}">
+                </div>
+                <div class="form-group">
+                    <label for="id_documento">Documento da audiência judicial</label><br><input type="file"
+                        name="documento" class="form-control-file" style="display: block;" id="id_documento"
+                        multiple>
+                </div>
+                
+                <div class="form-group"><label for="id_data_do_processo">Data e horário da audiência</label><input
+                        type="datetime-local" name="data_do_processo" class="form-control"
+                        placeholder="Data e horário da audiência" required id="id_data_do_processo">
+                </div>
+                <div class="form-group">
+                    <label for="id_local">Local da audiência</label>
+                    <input type="text" name="local" maxlength="250" class="form-control"
+                        placeholder="Local da audiência" title="Local" required id="id_local" value="Fórum Bernardino de Souza">
+                </div>
+                <div class="form-group">
+                    <label for="id_interessados">Interessados do processo de
+                        audiência</label>
+                    <select name="interessados" class="form-control" id="id_interessados" multiple>
+                        {% for usuario in usuarios %}
+                        <option value="{{usuario.id}}">{{usuario.perfil.user.first_name}}{{usuario.matricula}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="form-check"><input type="checkbox" name="notificar_email" class="form-check-input"
+                            id="id_notificar_email" checked=""><label class="form-check-label"
+                            for="id_notificar_email">Notificar interessados por e-mail</label></div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check"><input type="checkbox" name="notificar_whatsapp" class="form-check-input"
+                            id="id_notificar_whatsapp" checked=""><label class="form-check-label"
+                            for="id_notificar_whatsapp">Notificar interessados por WhatsApp</label></div>
+                </div> -->
+
+                {% if audiencia_form %}
+                {% bootstrap_form audiencia_form %}
+                {% endif %}
+                <button class="btn btn-primary" type="submit">Salvar</button>
+                <a class="btn btn-secondary" href="{% url 'listar_audiencia'%}">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+
+{% endblock %}

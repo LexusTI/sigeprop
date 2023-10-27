@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block titulo %}Cadastrar Usuário{% endblock %}
+{% block head %}{% endblock %}
+{% block titulo_cabecalho %}Cadastrar Usuário{% endblock %}
+{% block section %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <!-- Approach -->
+        <div class="card shadow mb-4 card-body">
+
+            <form action="{% url 'cdt_usuario' %}" id="usuario_form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Perfil -->
+
+                <div class="btn btn-outline-primary my-2 my-sm-0">
+                    <label for="id_foto" style="margin: 0px;">Adicionar Foto</label>
+                    <input type="file" name="foto" accept="image/*" class="form-control-file"
+                        id="id_foto">
+                    </div>
+
+                <!-- Usuário -->
+
+                <div class="form-group">
+                    <label for="id_nome">Nome</label>
+                    <input type="text" name="nome" maxlength="50"
+                        class="form-control" placeholder="Nome" title="Nome" required id="id_nome">
+                    </div>
+                <div class="form-group">
+                    <label for="id_sobrenome">Sobrenome</label>
+                    <input type="text" name="sobrenome"
+                        maxlength="150" class="form-control" placeholder="Sobrenome" title="Sobrenome" required
+                        id="id_sobrenome">
+                    </div>
+                <div class="form-group">
+                    <label for="id_email">E-mail</label>
+                    <input type="email" name="email"
+                        class="form-control" placeholder="E-mail" title="" required id="id_email">
+                    <div id="pwm-inline-icon-26157" class="pwm-field-icon"
+                        style="position: absolute !important; width: 18px !important; height: 18px !important; min-height: 0px !important; min-width: 0px !important; z-index: 2147483645 !important; box-shadow: none !important; box-sizing: content-box !important; background: none !important; border: none !important; padding: 0px !important; cursor: pointer !important; outline: none !important; margin-top: -28px; margin-left: 1567px;">
+                        <svg style="display: inline-block !important; width: 16px !important; height: 16px !important; fill: rgb(230, 0, 23) !important; margin-top: 0.5px !important; position: absolute !important; top: 0px !important; left: 0px !important;"
+                            viewBox="0 0 40 64">
+                            <g>
+                                <path
+                                    d="m20,28.12a33.78,33.78 0 0 1 13.36,2.74a22.18,22.18 0 0 1 0.64,5.32c0,9.43 -5.66,17.81 -14,20.94c-8.34,-3.13 -14,-11.51 -14,-20.94a22.2,22.2 0 0 1 0.64,-5.32a33.78,33.78 0 0 1 13.36,-2.74m0,-28.12c-8.82,0 -14,7.36 -14,16.41l0,5.16c2,-1.2 2,-1.49 5,-2.08l0,-3.08c0,-6.21 2.9,-11.41 8.81,-11.41l0.19,0c6.6,0 9,4.77 9,11.41l0,3.08c3,0.58 3,0.88 5,2.08l0,-5.16c0,-9 -5.18,-16.41 -14,-16.41l0,0zm0,22c-6.39,0 -12.77,0.67 -18.47,4a31.6,31.6 0 0 0 -1.53,9.74c0,13.64 8.52,25 20,28.26c11.48,-3.27 20,-14.63 20,-28.26a31.66,31.66 0 0 0 -1.54,-9.77c-5.69,-3.3 -12.08,-4 -18.47,-4l0,0l0.01,0.03z">
+                                </path>
+                                <path
+                                    d="m21.23,39.5a2.81,2.81 0 0 0 1.77,-2.59a2.94,2.94 0 0 0 -3,-2.93a3,3 0 0 0 -3,3a2.66,2.66 0 0 0 1.77,2.48l-1.77,4.54l6,0l-1.77,-4.5z">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_senha">Senha</label>
+                    <input type="password" name="senha" class="form-control" placeholder="Senha"
+                        title="A senha deverá ter no mínimo 8 caracteres. Deverá ter números e letras." required
+                        id="id_senha">
+                    <small class="form-text text-muted">A senha deverá ter no mínimo 8 caracteres. Deverá ter números e
+                        letras.</small>
+
+                    <div id="pwm-inline-icon-36445" class="pwm-field-icon"
+                        style="position: absolute !important; width: 18px !important; height: 18px !important; min-height: 0px !important; min-width: 0px !important; z-index: 2147483645 !important; box-shadow: none !important; box-sizing: content-box !important; background: none !important; border: none !important; padding: 0px !important; cursor: pointer !important; outline: none !important; margin-top: -51.1875px; margin-left: 1567px;">
+                        <svg style="display: inline-block !important; width: 16px !important; height: 16px !important; fill: rgb(230, 0, 23) !important; margin-top: 0.5px !important; position: absolute !important; top: 0px !important; left: 0px !important;"
+                            viewBox="0 0 40 64">
+                            <g>
+                                <path
+                                    d="m20,28.12a33.78,33.78 0 0 1 13.36,2.74a22.18,22.18 0 0 1 0.64,5.32c0,9.43 -5.66,17.81 -14,20.94c-8.34,-3.13 -14,-11.51 -14,-20.94a22.2,22.2 0 0 1 0.64,-5.32a33.78,33.78 0 0 1 13.36,-2.74m0,-28.12c-8.82,0 -14,7.36 -14,16.41l0,5.16c2,-1.2 2,-1.49 5,-2.08l0,-3.08c0,-6.21 2.9,-11.41 8.81,-11.41l0.19,0c6.6,0 9,4.77 9,11.41l0,3.08c3,0.58 3,0.88 5,2.08l0,-5.16c0,-9 -5.18,-16.41 -14,-16.41l0,0zm0,22c-6.39,0 -12.77,0.67 -18.47,4a31.6,31.6 0 0 0 -1.53,9.74c0,13.64 8.52,25 20,28.26c11.48,-3.27 20,-14.63 20,-28.26a31.66,31.66 0 0 0 -1.54,-9.77c-5.69,-3.3 -12.08,-4 -18.47,-4l0,0l0.01,0.03z">
+                                </path>
+                                <path
+                                    d="m21.23,39.5a2.81,2.81 0 0 0 1.77,-2.59a2.94,2.94 0 0 0 -3,-2.93a3,3 0 0 0 -3,3a2.66,2.66 0 0 0 1.77,2.48l-1.77,4.54l6,0l-1.77,-4.5z">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="id_pelotao">Pelotão</label>
+                    <input type="text" name="pelotao"
+                        maxlength="10" class="form-control" placeholder="Pelotão" title="Pelotão" required
+                        id="id_pelotao">
+                </div>
+                <div class="form-group"><label for="id_matricula">Matrícula</label><input type="text" name="matricula"
+                        maxlength="20" class="form-control" placeholder="Matrícula" title="Matrícula" required
+                        id="id_matricula"></div>
+                <div class="form-group"><label for="id_cpf">CPF</label><input type="text" name="cpf" maxlength="14"
+                        class="form-control mask-cpf" placeholder="CPF" title="Formato: xxx.xxx.xxx-xx" required id="id_cpf">
+                    <small class="form-text text-muted">Formato: xxx.xxx.xxx-xx</small>
+
+                </div>
+                <div class="form-group">
+                    <label for="id_rg">RG</label>
+                    <input type="text" name="rg" maxlength="13"
+                        class="form-control mask-rg" placeholder="RG" title="Formato: xx.xxx.xxx-xx" required id="id_rg">
+                    <small class="form-text text-muted">Formato: xx.xxx.xxx-xx</small>
+
+                </div>
+                <div class="form-group">
+                    <label for="id_telefone">Telefone</label>
+                    <input type="text" name="telefone"
+                        maxlength="20" class="form-control mask-telefone" placeholder="Telefone" title="Apenas números com DDD"
+                        required id="id_telefone">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Tipo de usuário</label>
+                    <select name="tipo_usuario" class="form-control" id="exampleFormControlSelect1">
+                      <option value="1">Comum</option>
+                      <option value="2">Administrador</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+
+<script>
+    $("#usuario_form").submit(function () {
+        $("#usuario_form").find("input[class*=mask]").unmask();
+    });
+</script>
+{% endblock %}
